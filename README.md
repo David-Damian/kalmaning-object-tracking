@@ -1,4 +1,4 @@
-# Seguimiento de objetos
+# Filtro de Kalman para seguimiento de objetos.
 
 El objetivo de este proyecto es realizar seguimiento de personas en un video utilizando un _filtro de Kalman_ y un modelo pre-entrenado de aprendizaje profundo (COCO model) para procesar cada cuadro del video.
 
