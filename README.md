@@ -11,7 +11,7 @@ Se utiliza Python y OpenCV para procesar los cuadros de video y se genera un arc
 ├── notebooks/
 └── src
     ├── lib.py
-    ├── sort.py
+    ├── sort.py : implementación de SORT (algoritmo que utiliza la información de detecciones de objetos en video para dar seguimiento de los mismos)
 ├── README.md
 ├── requirements.txt
 
