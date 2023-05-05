@@ -8,3 +8,8 @@ Se utiliza Python y OpenCV para procesar los cuadros de video y se genera un arc
 Para ejecutar este proyecto, necesitarás tener instalado lo siguiente (véase `requirements.txt`):
 - Python
 - Paquetes: `numpy`, `matplotlib`, `filterpy==1.4.5`, `scikit-image==0.17.2`, `lap==0.4.0`, `ffmpeg-python`, `seaborn`, `Pillow`, `numpy`
+
+## Créditos
+
+Este proyecto está basado en el trabajo de [niconielsen32](https://github.com/niconielsen32/ObjectTracking). Se agradece a la comunidad de código abierto por compartir su conocimiento y recursos para el beneficio de todos.
+
