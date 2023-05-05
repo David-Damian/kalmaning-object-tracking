@@ -8,11 +8,11 @@ Se utiliza Python y OpenCV para procesar los cuadros de video y se genera un arc
 ```
 ├── docs/
 ├── notebooks/
-├── src
+└── src
     ├── lib.py : Funciones para reproducir video y crear video con las bounding boxes inferidas
     ├── sort.py : implementación de SORT (algoritmo que utiliza la información de detecciones de objetos en video para dar seguimiento de los mismos)
 ├── README.md
-└── requirements.txt
+├── requirements.txt
 
 ```
 
