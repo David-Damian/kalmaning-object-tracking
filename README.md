@@ -5,7 +5,17 @@ El objetivo de este proyecto es realizar seguimiento de personas en un video uti
 Se utiliza Python y OpenCV para procesar los cuadros de video y se genera un archivo de salida con la posición de los objetos rastreados.
 
 ## Estructura de repositorio
-> 
+```
+├── docs/
+├── notebooks/
+├── notebooks/
+└── src
+    ├── lib.py
+    ├── sort.py
+├── README.md
+├── requirements.txt
+
+```
 
 ## Implementación
 Para ejecutar este proyecto, necesitarás tener instalado lo siguiente (véase `requirements.txt`):
