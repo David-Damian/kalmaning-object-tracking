@@ -25,3 +25,8 @@ Para ejecutar este proyecto, necesitarás tener instalado lo siguiente (véase `
 
 Este proyecto está basado en el trabajo de [niconielsen32](https://github.com/niconielsen32/ObjectTracking). Se agradece a la comunidad de código abierto por compartir su conocimiento y recursos para el beneficio de todos.
 
+# Referencias
+- [Documentación de la implementación de KF en Python](https://filterpy.readthedocs.io/en/latest/kalman/KalmanFilter.html)
+- [Trabajo base](https://github.com/niconielsen32/ObjectTracking)
+- [Modelos de espacio de estados](https://felipegonzalez.github.io/metodos-analiticos-mcd-2023/08-modelos-1.html)
+
