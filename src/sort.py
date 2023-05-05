@@ -76,7 +76,7 @@ def convert_bbox_to_z(bbox):
   r = w / float(h) # ancho/alto
   return np.array([x, y, s, r]).reshape((4, 1)) # lo regresa como vector columna
 
-
+# funcion inversa de convert_bbox_to_z
 def convert_x_to_bbox(x,score=None):
   """
   Takes a bounding box in the centre form [x,y,s,r] and returns it in the form
@@ -92,31 +92,54 @@ def convert_x_to_bbox(x,score=None):
 
 class KalmanBoxTracker(object):
   """
-  This class represents the internal state of individual tracked objects observed as bbox.
+  INTERNAL STATE of individual tracked objects observed as bbox.
   """
   count = 0
   def __init__(self,bbox):
     """
-    Initialises a tracker using initial bounding box.
-    """
+    Inicializa el tracker usando la bounding box inicial.
+    """0
     self.kf = KalmanFilter(dim_x=7, dim_z=4) # x: state vector, z: mesuarement vector
+
+    # --------------------------------- MEASUREMENT AND STATE EQUATIONS---------------------------------
+
+    # Observation matrix of dimension (dim_z, dim_x) 
+    self.kf.H = np.array([[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,0,1,0,0,0]])
+
     # State Transition matrix:
     self.kf.F = np.array([[1,0,0,0,1,0,0],[0,1,0,0,0,1,0],[0,0,1,0,0,0,1],[0,0,0,1,0,0,0],  [0,0,0,0,1,0,0],[0,0,0,0,0,1,0],[0,0,0,0,0,0,1]])
 
-    # H : numpy.array(dim_z, dim_x) Measurement function
-    self.kf.H = np.array([[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,0,1,0,0,0]])
-
-    self.kf.R[2:,2:] *= 10. # Measurement noise matrix. Multiplica por 10 los elementos de la matriz de ruido de medición 
+  # ------------------------------------NOISE MATRICES------------------------
+  # Measurement noise matrix.
+    self.kf.R[2:,2:] *= 10. # Multiplica por 10 los elementos de la matriz de ruido de medición 
                             # del filtro de Kalman a partir de la tercera fila y la tercera columna hasta el final de la matriz.
-    self.kf.P[4:,4:] *= 1000. #give high uncertainty to the unobservable initial velocities. This is the id matrix times 1000
-    self.kf.P *= 10.
+
+  # State noise matrix    
     self.kf.Q[-1,-1] *= 0.01
     self.kf.Q[4:,4:] *= 0.01
 
-    self.kf.x[:4] = convert_bbox_to_z(bbox) # vector de estados x=(0,0,0,x,y,s,r)^T
+  # ---------------------------------- KALMAN FILTER INITIALIZATION -------------------------------
+    # initial value for state: first bounding box
+    self.kf.x[:4] = convert_bbox_to_z(bbox)  
+
+    # covariance matrix for the initial state. 
+    # give high uncertainty to the unobservable initial velocities. This is the id matrix times 1000
+    self.kf.P[4:,4:] *= 1000. 
+    self.kf.P *= 10.
+
+    # THUS, WE INITIALIZE THE FILTER ACCORDING TO  x ~ N_7(x_0,diag(10,10,10,1000,1000,1000,1000)) 
+    # WITH x_0 the first bounding box features (x center, y center, area, aspect relation)
+
+  # -------------------------------- MONITORING SOME PARAMETERS --------------------------
+  # This class also monitor the following parameters:
+
+  #  * time elapsed since last update. Default 0
     self.time_since_update = 0
+  #  * Number of detected objects
     self.id = KalmanBoxTracker.count
     KalmanBoxTracker.count += 1
+  
+  #  * history of previous states of the object
     self.history = []
     self.hits = 0
     self.hit_streak = 0
