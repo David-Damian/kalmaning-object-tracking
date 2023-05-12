@@ -109,7 +109,8 @@ class KalmanBoxTracker(object):
     # State Transition matrix:
     self.kf.F = np.array([[1,0,0,0,1,0,0],[0,1,0,0,0,1,0],[0,0,1,0,0,0,1],[0,0,0,1,0,0,0],  [0,0,0,0,1,0,0],[0,0,0,0,0,1,0],[0,0,0,0,0,0,1]])
 
-  # ------------------------------------NOISE MATRICES------------------------
+  # ------------------------------------NOISE MATRICES ------------------------
+  # ---------------------------------- i.e \Sigma_{epsilon}: R and $\Sigma_{eta}: Q -----------------------
   # Measurement noise matrix.
     self.kf.R[2:,2:] *= 10. # Multiplica por 10 los elementos de la matriz de ruido de medición 
                             # del filtro de Kalman a partir de la tercera fila y la tercera columna hasta el final de la matriz.
