@@ -1,0 +1,20 @@
+---
+title: "Filtro de Kalman para seguimiento de objetos."
+author: 
+    - Brandon Francisco Hernández Troncoso
+    - David Damián Arbeu
+    - Valeria Roberts Trujillo 
+format:
+  revealjs:
+    theme: dark
+    incremental: true  
+---
+
+::: {.incremental}
+# Objetivos
+
+- Seguimiento de personas en un video:
+Filtro de Kalman
+- Detección de objetos: Modelo pre-
+entrenado de aprendizaje profundo.
+:::
