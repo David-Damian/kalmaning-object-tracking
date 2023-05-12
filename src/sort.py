@@ -111,11 +111,12 @@ class KalmanBoxTracker(object):
 
   # ------------------------------------NOISE MATRICES ------------------------
   # ---------------------------------- i.e \Sigma_{epsilon}: R and $\Sigma_{eta}: Q -----------------------
-  # Measurement noise matrix.
+  
+  # Measurement noise matrix. OBS: default eye(dim_x)
     self.kf.R[2:,2:] *= 10. # Multiplica por 10 los elementos de la matriz de ruido de medición 
                             # del filtro de Kalman a partir de la tercera fila y la tercera columna hasta el final de la matriz.
 
-  # State noise matrix    
+  # State noise matrix. OBS: by default equals eye(dim_x)
     self.kf.Q[-1,-1] *= 0.01
     self.kf.Q[4:,4:] *= 0.01
 
@@ -127,6 +128,8 @@ class KalmanBoxTracker(object):
     # give high uncertainty to the unobservable initial velocities. This is the identity matrix times 1000
     self.kf.P[4:,4:] *= 1000. 
     self.kf.P *= 10.
+
+    # OBS: P is by default eye(dim_x)
 
     # THUS, WE INITIALIZE THE FILTER ACCORDING TO  x ~ N_7(x_0,diag(10,10,10,1000,1000,1000,1000)) 
     # WITH x_0 the first bounding box features (x center, y center, area, aspect relation)
