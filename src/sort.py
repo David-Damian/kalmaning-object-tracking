@@ -124,7 +124,7 @@ class KalmanBoxTracker(object):
     self.kf.x[:4] = convert_bbox_to_z(bbox)  
 
     # covariance matrix for the initial state. 
-    # give high uncertainty to the unobservable initial velocities. This is the id matrix times 1000
+    # give high uncertainty to the unobservable initial velocities. This is the identity matrix times 1000
     self.kf.P[4:,4:] *= 1000. 
     self.kf.P *= 10.
 
