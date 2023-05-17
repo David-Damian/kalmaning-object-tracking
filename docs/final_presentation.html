@@ -330,8 +330,8 @@
 <section id="objetivos" class="title-slide slide level1 incremental center">
 <h1>Objetivos</h1>
 <ul>
-<li class="fragment"><strong>Seguimiento de personas en un video</strong>: Filtro de Kalman</li>
-<li class="fragment"><strong>Detección de objetos</strong>: Modelo pre- entrenado de aprendizaje profundo.</li>
+<li class="fragment"><p>Diseño de un filtro de Kalman</p></li>
+<li class="fragment"><p>Aplicación: <strong>Seguimiento de personas en un video</strong></p></li>
 </ul>
 </section>
 
@@ -352,7 +352,7 @@
 <h1>Modelación</h1>
 <ul>
 <li class="fragment"><p><span class="math inline">\(\mathbf{z}_t=(x_t,y_t,s_t,r_t)^T\)</span> : Observación al tiempo <span class="math inline">\(t\)</span>, con <span class="math inline">\(x_t,y_t\)</span> el centro del cuadro delimitador de una persona detectada, <span class="math inline">\(s_t\)</span> es el área del cuadro y <span class="math inline">\(r_t\)</span> es la relación de aspecto.</p></li>
-<li class="fragment"><p><span class="math inline">\(\mathbf{x}_t\)</span> es el vector de estados al tiempo <span class="math inline">\(t\)</span></p></li>
+<li class="fragment"><p><span class="math inline">\(\mathbf{x}_t= (x_t, y_t, s_t, r_t, v_{x},v_y, v_s)\)</span> es el vector de estados al tiempo <span class="math inline">\(t\)</span></p></li>
 </ul>
 </section>
 
@@ -391,12 +391,62 @@
 <p>Valores razonables a las distintas variables del modelo son cruciales</p>
 </div>
 <div class="fragment fade-up">
-<p><strong>Filtro funcional</strong></p>
-</div>
-<div class="footer footer-default">
-<p>Métodos Analíticos, ITAM 2023</p>
+<p><strong>Predicciones poco precisas</strong></p>
 </div>
 </section></section>
+<section id="diseño-del-error-de-medición" class="title-slide slide level1 center">
+<h1>Diseño del error de medición</h1>
+
+</section>
+
+<section id="section-3" class="title-slide slide level1 center">
+<h1></h1>
+<p>Medición: <span class="math inline">\(\mathbf{z}_t\mid \mathbf{x}_t\sim \text{N}(\mathbf{x}_t, \mathbf{R})\)</span></p>
+<div class="fragment fade-up">
+<p>Error de medición: <span class="math inline">\(\mathbf{R}=\text{diag}(1,1,10,10)\)</span></p>
+</div>
+<div class="fragment fade-up">
+<ul>
+<li class="fragment"><p>25 FPS</p></li>
+<li class="fragment"><p>1 pixel de desviación de los centros <span class="math inline">\(x_t\)</span> y <span class="math inline">\(y_t\)</span> del <em>bounding box</em></p></li>
+<li class="fragment"><p>Más incertidumbre al área y relación de aspecto.</p></li>
+</ul>
+</div>
+</section>
+
+<section id="diseño-del-error-del-estado" class="title-slide slide level1 center">
+<h1>Diseño del error del estado</h1>
+
+</section>
+
+<section id="section-4" class="title-slide slide level1 center">
+<h1></h1>
+<div class="fragment fade-out">
+<p>Estado: <span class="math inline">\(\mathbf{x}_t\mid \mathbf{x}_{t-1}\sim \text{N}(\mathbf{x}_{t-1}, \mathbf{Q})\)</span></p>
+</div>
+<div class="fragment fade-up fade-out">
+<p><span class="math display">\[
+\mathbf{x}_t=(x_t,y_t,s_t, r_t, v_x, v_y, v_s)
+\]</span></p>
+<p>centro del <em>BB</em>, área, relación de aspecto y velocidades</p>
+</div>
+<div class="fragment fade-up">
+<p><span class="math display">\[
+\mathbf{x}_t=(x_t,y_t,s_t, r_t, v_x, v_y, v_s)
+\]</span></p>
+<p><strong>Covarianzas del error</strong></p>
+<p><span class="math display">\[\mathbf{Q}=\text{diag}(1,1,1,1,10^{-2},10^{-2},(10^{-2})^2)\]</span></p>
+</div>
+<div class="fragment fade-up">
+<ul>
+<li class="fragment">Menos incertidumbre para <span class="math inline">\(x_x, v_y, v_s\)</span> pues asumimos <strong>velocidad constante</strong></li>
+</ul>
+</div>
+
+<img src="itam_logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
+<p>Métodos Analíticos, ITAM 2023</p>
+</div>
+</section>
     </div>
   </div>
 
