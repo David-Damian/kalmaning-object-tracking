@@ -102,12 +102,14 @@ class KalmanBoxTracker(object):
     self.kf = KalmanFilter(dim_x=7, dim_z=4) # x: state vector, z: mesuarement vector
 
     # --------------------------------- MEASUREMENT AND STATE EQUATIONS---------------------------------
-
+    dt = 1.0   # time step
     # Observation matrix of dimension (dim_z, dim_x) 
     self.kf.H = np.array([[1,0,0,0,0,0,0],[0,1,0,0,0,0,0],[0,0,1,0,0,0,0],[0,0,0,1,0,0,0]])
 
+    dt = 1.0   # time step
+
     # State Transition matrix:
-    self.kf.F = np.array([[1,0,0,0,1,0,0],[0,1,0,0,0,1,0],[0,0,1,0,0,0,1],[0,0,0,1,0,0,0],  [0,0,0,0,1,0,0],[0,0,0,0,0,1,0],[0,0,0,0,0,0,1]])
+    self.kf.F = np.array([[1,0,0,0,dt,0,0],[0,1,0,0,0,dt,0],[0,0,1,0,0,0,dt],[0,0,0,1,0,0,0],  [0,0,0,0,1,0,0],[0,0,0,0,0,1,0],[0,0,0,0,0,0,1]])
 
   # ------------------------------------NOISE MATRICES ------------------------
   # ---------------------------------- i.e \Sigma_{epsilon}: R and $\Sigma_{eta}: Q -----------------------
@@ -122,7 +124,9 @@ class KalmanBoxTracker(object):
 
   # ---------------------------------- KALMAN FILTER INITIALIZATION -------------------------------
     # initial value for state: first bounding box
+    # x : ndarray (dim_x, 1), default = [0,0,0…0]
     self.kf.x[:4] = convert_bbox_to_z(bbox)  
+    # then x_0=(x,y,s,r,0,0,0). Thus we initialize the state at
 
     # covariance matrix for the initial state. 
     # give high uncertainty to the unobservable initial velocities. This is the identity matrix times 1000
