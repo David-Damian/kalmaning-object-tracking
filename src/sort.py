@@ -98,7 +98,7 @@ class KalmanBoxTracker(object):
   def __init__(self,bbox):
     """
     Inicializa el tracker usando la bounding box inicial.
-    """0
+    """
     self.kf = KalmanFilter(dim_x=7, dim_z=4) # x: state vector, z: mesuarement vector
 
     # --------------------------------- MEASUREMENT AND STATE EQUATIONS---------------------------------
